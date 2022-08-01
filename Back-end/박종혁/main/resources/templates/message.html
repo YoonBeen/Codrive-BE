@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thyeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var message = [[${message}]];
+    alert(message);
+
+    location.replace([[${searchUrl}]]);
+    /*]]>*/
+</script>
+<body>
+<!--message는 컨르롤러에서 불러들이는 값을 대입한 변수
+그 message 알림창으로 띄워주는 html메서드 사용
+설정한 Url로 다시 이동한다는 메서드-->
+</body>
+</html>

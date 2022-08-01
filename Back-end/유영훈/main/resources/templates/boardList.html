@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<style>
+    .layout {
+        width : 500px;
+        margin : 0 auto;
+        margin-top: 40px;
+    }
+</style>
+<body>
+  <div class="layout">
+
+      <button type="button" onClick="location.href='/board/Write'">글 작성</button>
+      <table border="">
+          <thead>
+            <tr>
+                <th>글 번호</th>
+                <th>태그</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일자</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="board : ${list}">
+                <td th:text="${board.id}"></td>
+                <td th:text="${board.tag}"></td>
+<!--                th:herf="@{board/View(id=$(board.id))} 링크를 걸어준다 board/View에 아이디를 넣어서(?id=아이디)-->
+                <td>
+                    <a th:text="${board.title}" th:href="@{/board/View(id=${board.id})}"></a>
+                </td>
+                <td th:text="${board.user}"></td>
+                <td th:text="${board.day}"></td>
+            </tr>
+          </tbody>
+      </table>
+
+      <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+          <a th:if="${page != nowPage}" th:href="@{/board/List(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+          <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+      </th:block>
+
+      <form th:action="@{/board/List}" method="get">
+        <input type="text" name="searchKeyword" th:value="${param.searchKeyword}">
+        <button type="submit">검색</button>
+      </form>
+  </div>
+</body>
+</html>

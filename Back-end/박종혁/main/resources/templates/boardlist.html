@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thyeleaf.org"><!--thyeleaf를 사용할 수 있게 도와주는 xml 문장-->
+    <head>
+        <meta charset="UTF-8">
+        <title>게시글 리스트 페이지</title>
+    </head>
+    <style>
+            .layout{
+            width : 500px;
+            margin : 0 auto;
+            margin-top : 40px;
+        }
+    </style>
+    <body>
+    <div class = "layout">
+        <table>
+            <thead>
+            <tr>
+                <th>글번호</th>
+                <th>제목</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each = "board : ${list}"> <!--each 는 반복문이고 데이터가 없을 때까지 반복-->
+                    <td th:text = "${board.id}">1</td> <!--board 클래스의 아이디가 나타난다-->
+                    <td >
+                        <a th:text = "${board.title}" th:href = "@{/board/view(id=${board.id})}"><!--th:href는 해당 url 주소로 넘어갈 수 있게 만들어주는 메서드이다.-->
+                            제목입니다.
+                        </a></td>
+                </tr>
+            </tbody>
+        </table>
+        <!--페이징 리스트 코드-->
+        <th:block th:each = "page : ${#numbers.sequence(startPage, endPage)}"> <!-- 시작번호의 페이지부터 끝번호 페이지 까지 반복하는 태크를 생성(페이징처리)-->
+            <a th:if="${page != nowPage}" th:href = "@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}"
+               th:text = "${page}"></a>
+            <strong th:if="${page == nowPage}"  th:text = "${page}" style = "color : red "></strong><!-- 현재 페이지를 선택했다는 걸 표시해줌-->
+        </th:block>
+        <form th:action="@{/board/list}" method="get">
+            <input type="text" name="searchKeyword">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+    </body>
+</html>
