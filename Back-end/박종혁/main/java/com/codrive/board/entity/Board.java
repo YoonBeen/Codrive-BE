@@ -11,9 +11,12 @@ import javax.persistence.Id;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//identity는 mysql이나 mariadb를 의미하는 제너레이션 타입니다.
-    private Integer id;
-    private String title;
-    private String content;
-    private String filename;
-    private String filepath;
+    private Integer id; //게시판 아이디 (번호)
+    private String title; //게시판 제목
+    private String content; //게시판 내용
+    private String filename; //파일이름(저장할)
+    private String filepath; //파일경로(저장한)
+    private String user; //작성자
+    private String day; //작성일자
+    private String tag; //언어구분
 }
